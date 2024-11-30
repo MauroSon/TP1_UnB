@@ -56,6 +56,25 @@ public:
     int run();
 };
 
+class TUSenha {
+
+private:
+    
+    const static int VALOR_VALIDO = 21345;
+    const static int VALOR_INVALIDO = 12345;
+    Senha *senha;
+    int estado;
+    void setUp();
+    void tearDown();
+    void testarCenarioValorValido();
+    void testarCenarioValorInvalido();
+public:
+    
+    const static int SUCESSO = 0;
+    const static int FALHA = -1;
+    int run();
+};
+
 class TUCodigo {
     private:
         static constexpr const char* CODIGO_VALIDO = "uba123";
