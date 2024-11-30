@@ -60,14 +60,14 @@ class TUSenha {
 
 private:
     
-    const static int VALOR_VALIDO = 21345;
-    const static int VALOR_INVALIDO = 12345;
+    const static int SENHA_VALIDO = 21345;
+    const static int SENHA_INVALIDO = 12345;
     Senha *senha;
     int estado;
     void setUp();
     void tearDown();
-    void testarCenarioValorValido();
-    void testarCenarioValorInvalido();
+    void testarCenarioSenhaValido();
+    void testarCenarioSenhaInvalido();
 public:
     
     const static int SUCESSO = 0;
