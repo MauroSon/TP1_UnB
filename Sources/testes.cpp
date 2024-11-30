@@ -121,6 +121,48 @@ int TUNome::run(){
     return estado;
 }
 
+//Teeste Unitário Senha:
+
+void TUSenha::setUp(){
+    senha = new Senha();
+    estado = SUCESSO;
+}
+
+void TUSenha::tearDown(){
+    delete senha;
+}
+
+void TUSenha::testarCenarioSenhaValido(){
+    try{
+        senha -> setValor(to_string(SENHA_VALIDO));
+        cout << "Valor da senha: " << senha->getValor() << endl;
+        if(senha -> getValor() != to_string(SENHA_VALIDO))
+        estado = FALHA;
+    }
+    catch(invalid_argument &excecao){
+        estado = FALHA;
+    }
+}
+
+void TUSenha::testarCenarioSenhaInvalido(){
+    try{
+        senha -> setValor(to_string(SENHA_INVALIDO));
+        cout << "Valor da senha: " << senha->getValor() << endl;
+        estado = FALHA;
+    }
+    catch(invalid_argument &excecao){
+        if(senha -> getValor() == to_string(SENHA_INVALIDO))
+        estado = FALHA;
+    }
+}
+
+int TUSenha::run(){
+    setUp();
+    testarCenarioSenhaValido();
+    testarCenarioSenhaInvalido();
+    tearDown();
+    return estado;
+}
 
 // Teste Unitário Data:
 
