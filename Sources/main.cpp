@@ -103,7 +103,31 @@ int main() {
         cout << "Excecao (Nome): " << exp.what() << endl;
     }
 
+    //Testes de classe Senha
 
+    switch (testeSenha.run())
+    {
+    case TUSenha::SUCESSO:cout<<"SUCESSO"<<endl;
+        break;
+    
+    case TUSenha::FALHA:cout<<"FALHA"<<endl;
+        break;
+    }
+
+    try{
+        senha.setSenha("21345");       
+    }
+    catch(invalid_argument&exp){
+        cout<<"Excecao:"<<exp.what()<<endl;
+    }
+
+    try{
+        senha.setSenha("12345");      
+    }
+    catch(invalid_argument&exp){
+        cout<<"Excecao:"<<exp.what()<<endl;
+    }
+    
     // Testes de classe Data
 
     switch(testeData.run()){
