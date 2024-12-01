@@ -51,8 +51,9 @@ int main() {
 
     TUNome testeNome;
 
+    TUSenha testeSenha;
+    
     TUData testeData;
-
 
     // Testes:
 
