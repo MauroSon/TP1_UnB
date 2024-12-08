@@ -17,8 +17,8 @@ using namespace std;
  */
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO AVALIAÇÃO
+// --------------------------------------------------------------------
+// DOMÍNIO AVALIAÇÃO
 /**
  * @brief Classe que representa uma avaliação de 0 a 5.
  *
@@ -46,8 +46,8 @@ inline int Avaliacao::getAvaliacao() const {
 }
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO CÓDIGO
+// --------------------------------------------------------------------
+// DOMÍNIO CÓDIGO
 /**
  * @brief Classe que representa um código de 6 caracteres.
  *
@@ -76,8 +76,8 @@ inline string Codigo::getCodigo() const {
 }
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO DATA
+// --------------------------------------------------------------------
+// DOMÍNIO DATA
 /**
  * @brief Classe que representa uma data no formato DD-MM-AA.
  *
@@ -109,8 +109,8 @@ inline string Data::getData() const {
 }
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO DINHEIRO
+// --------------------------------------------------------------------
+// DOMÍNIO DINHEIRO
 /**
  * @brief Classe que representa um valor monetário.
  *
@@ -138,10 +138,10 @@ inline float Dinheiro::getDinheiro() const {
 }
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO DURAÇÃO
+// --------------------------------------------------------------------
+// DOMÍNIO DURAÇÃO
 /**
- * @brief Representa uma duração em dias.
+ * @brief Classe que representa uma duração em dias.
  *
  * A classe gerencia a duração de atividades.
  *
@@ -167,8 +167,8 @@ inline int Duracao::getDuracao() const {
 }
 
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO HORÁRIO
+// --------------------------------------------------------------------
+// DOMÍNIO HORÁRIO
 /**
  * @brief Classe que representa um horário no formato HH:MM.
  *
@@ -197,8 +197,8 @@ inline string Horario::getHorario() const {
     return horario;
 }
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO NOME
+// --------------------------------------------------------------------
+// DOMÍNIO NOME
 /**
  * @brief Classe que representa um nome com até 30 caracteres.
  *
@@ -225,8 +225,8 @@ inline string Nome::getNome() const {
     return nome;
 }
 
-/// --------------------------------------------------------------------
-/// DOMÍNIO SENHA
+// --------------------------------------------------------------------
+// DOMÍNIO SENHA
 /**
  * @brief Classe que representa uma senha de cinco dígitos.
  *
