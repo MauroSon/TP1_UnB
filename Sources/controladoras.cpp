@@ -1,5 +1,5 @@
 #include "controladoras.hpp"
-
+using namespace std;
 // ---------------------------------------------------------------------------------
 // Implementações de métodos de classe Apresentacao Autenticacao.
 
@@ -34,4 +34,10 @@ bool CntrApresentacaoAutenticacao::autenticar(Codigo *codigo) {
     // Retornar resultado da autenticação.
 
     return resultado;
+}
+
+
+bool CntrIUEntidadesServico::autenticar(Matricula *matricula) {
+
+
 }

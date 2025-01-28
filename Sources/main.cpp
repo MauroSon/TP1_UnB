@@ -11,6 +11,22 @@ using namespace std;
 
 int main() {
 
+    // TESTES PARA O TRABALHO 2:
+
+    // Declaração de classes controladoras e classes stubs:
+
+    IUEntidadesServico *cntrIUEntidadesServico = new CntrIUEntidadesServico();
+    ILNEntidadesServico *stubLNEntidadesServico = new StubLNEntidadesServico();
+
+    // Ligar instancia de controladora a instancia de stub:
+
+    cntrIUEntidadesServico->setCntrLNEntidadesServico(stubLNEntidadesServico);
+
+    bool resultado;
+
+
+    // TESTES PARA O TRABALHO 1:
+
     // Declaração de domínios:
     /*
     Avaliacao avaliacao;
@@ -247,4 +263,3 @@ int main() {
 
     return 0;
 }
-

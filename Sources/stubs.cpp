@@ -23,5 +23,20 @@ bool StubServicoAutenticacao::autenticar(const Codigo &codigo, const Senha &senh
     if(codigo.getCodigo() == TRIGGER_ERRO_SISTEMA_AUTENTICACAO) {
             throw runtime_error("Erro de sistema");
     }
+
+const int StubLNEntidadesServico::TRIGGER_FALHA;
+const int StubLNEntidadesServico::TRIGGER_ERRO_SISTEMA;
+
+bool StubLNEntidadesServico:://? {
+
+    cout << endl << "StubLNEntidadesServico::criar" << endl;
+    //CELO para todos? Ou CELO + identificador?
+
+    switch(viagem.getValor()){
+    case TRIGGER_FALHA:
+        return false;
+    case TRIGGER_ERRO_SISTEMA:
+        throw runtime_error("Erro de sistema");
+    }
     return true;
 }

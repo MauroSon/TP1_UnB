@@ -25,5 +25,18 @@ void inline CntrApresentacaoAutenticacao::setCntrServicoAutenticacao(IServicoAut
         this->cntrServicoAutenticacao = cntrServicoAutenticacao;
 }
 
+class CntrIEntidadesServico:public IEntidadesServico {
+private:
+    ILNEntidadesServico *cntrLNEntidadesServico;
+
+public:
+    bool celo();
+
+    void setCntrLNEntidadesServico(ILNEntidadesServico*);
+};
+
+void inline CntrIUEntidadesServico::setCntrLNEntidadesServico(ILNEntidadesServico *cntrLNEntidadesServico){
+    this->cntrLNEntidadesServico = cntrLNEntidadesServico;
+};
 
 #endif // CONTROLADORAS_HPP_INCLUDED
