@@ -25,3 +25,12 @@ bool StubServicoAutenticacao::autenticar(const Codigo &codigo, const Senha &senh
     }
     return true;
 }
+
+
+// -------------------------------------------------------------------------------------------
+// Definições de constantes (IContaServiço)
+
+const string StubContaServico::TRIGGER_FALHA_AUTENTICACAO = "%*/*";
+const string StubContaServico::TRIGGER_ERRO_SISTEMA_AUTENTICACAO = "7891011";
+
+bool StubContaServico::
