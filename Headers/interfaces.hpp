@@ -5,11 +5,84 @@
 #include "entidades.hpp"
 #include <stdexcept>
 
-// INL = InterfaceLogicaNegocio
+using namespace std;
 
-class ILNEntidadesServico;
+// -------------------------------------------------------------------------------------------
+// Declaração adiantada (forward declaration)
 
-class IEntidadesServico {
+class IServicoEntidades;
+class IServicoConta;
+class IServicoAutenticacao;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Declarações das interfaces da camada de apresentação.
+
+// --------------------------------------------------------------------
+// INTERFACE APRESENTACAO AUTENTICACAO
+/**
+*@brief Interface para a apresentação da autenticação.
+*Camada responsável por lidar com a interação do usuário no processo de autenticação e delegar a validação das credenciais para o serviço correspondente.
+*Desenvolvido por: Mariana Soares Oliveira (231013663)
+*/
+
+class IApresentacaoAutenticacao {
+    public:
+        virtual bool autenticar(Codigo*) = 0;
+        virtual void setCntrServicoAutenticacao(IServicoAutenticacao*) = 0;
+        virtual ~IApresentacaoAutenticacao(){}
+};
+
+// --------------------------------------------------------------------
+// INTERFACE APRESENTAÇÃO ENTIDADES
+/**
+ * @brief Classe que representa a interface de entidades na camada de apresentação.
+ *
+ * A classe gerencia as execuções referentes as entidades.
+ *
+ *
+ * Desenvolvido por: Mauro Ribeiro da Silva - 231013592
+ */
+
+class IApresentacaoEntidades{
+public:
+    virtual void executar(Codigo) = 0;
+    virtual ~IApresentacaoEntidades(){};
+};
+
+//----------------------------------------------------------------------------------------------------------------------
+// Declarações das interfaces da camada de Serviço.
+
+// --------------------------------------------------------------------
+// INTERFACE SERVIÇO AUTENTICAÇÃO
+
+/**
+ * @brief Classe abstrata Interface Serviço Autenticação
+ *
+ * Desenvolvido por: Isabela Soares Furlan - 231013636
+*/
+class IServicoAutenticacao {
+    public:
+        virtual bool autenticar(const Codigo&, const Senha&) = 0; ///< Autentica a conta verificando código e senha.
+        virtual ~IServicoAutenticacao() {} ///< Método destrutor da classe.
+};
+
+// --------------------------------------------------------------------
+// INTERFACE SERVIÇO CONTA
+
+class IServicoConta{
+public:
+    virtual bool criar(Conta) = 0;
+    virtual bool excluir(Codigo) = 0;
+    virtual bool ler(Conta*) = 0;
+    virtual bool atualizar(Conta) = 0;
+
+    virtual ~IServicoConta(){};
+};
+
+// --------------------------------------------------------------------
+// INTERFACE SERVIÇO ENTIDADES
+
+class IServicoEntidades {
 public:
     virtual bool criar(Viagem) = 0;
     virtual bool excluir(Viagem) = 0;
@@ -31,59 +104,8 @@ public:
     virtual bool ler(Hospedagem*) = 0;
     virtual bool atualizar(Hospedagem) = 0;
 
-    virtual void setCntrLNEntidadesServico(ILNEntidadesServico*) = 0;
-    virtual ~IEntidadesServico(){};
+    virtual void setCntrServicoEntidades(IServicoEntidades*) = 0;
+    virtual ~IServicoEntidades(){};
 };
-
-class ILNEntidadesServico {
-public:
-    virtual bool criar(const Viagem&) = 0;
-    virtual bool excluir(const Viagem&) = 0;
-    virtual bool ler(const Viagem&) = 0;
-    virtual bool atualizar(const Viagem&) = 0;
-
-    virtual bool criar(const Atividade&) = 0;
-    virtual bool excluir(const Atividade&) = 0;
-    virtual bool ler(const Atividade&) = 0;
-    virtual bool atualizar(const Atividade&) = 0;
-
-    virtual bool criar(const Destino&) = 0;
-    virtual bool excluir(const Destino&) = 0;
-    virtual bool ler(const Destino&) = 0;
-    virtual bool atualizar(const Destino&) = 0;
-
-    virtual bool criar(const Hospedagem&) = 0;
-    virtual bool excluir(const Hospedagem&) = 0;
-    virtual bool ler(const Hospedagem&) = 0;
-    virtual bool atualizar(const Hospedagem&) = 0;
-
-    virtual ~ILNEntidadesServico(){};
-};
-
-
-class ILNContaServico; 
-
-class IContaServico{
-public:
-    virtual bool criar(Conta) = 0;
-    virtual bool excluir(Codigo) = 0;
-    virtual bool ler(Conta) = 0;
-    virtual bool atualizar(Conta) = 0;
-
-    virtual void setCntrLNContaServico(ILNContaServico*) = 0;
-    virtual ~IContaServico(){};
-};
-
-class INLContaServico{
-public:
-    virtual bool criar(const Conta&) = 0;
-    virtual bool excluir(const Codigo&) = 0;
-    virtual bool ler(const Conta&) = 0;
-    virtual bool atualizar(const Conta&) = 0;
-
-    virtual ~INEContaServico(){};
-};
-
-    
 
 #endif // INTERFACES_HPP_INCLUDED
