@@ -3,6 +3,9 @@
 #include "dominios.hpp"
 #include "entidades.hpp"
 #include "testes.hpp"
+#include "interfaces.hpp"
+#include "stubs.hpp"
+#include "controladoras.hpp"
 
 using namespace std;
 
@@ -217,6 +220,46 @@ int main() {
         case TUHospedagem::FALHA: cout << "FALHA (HOSPEDAGEM)" << endl;
             break;
     }
+
+    // ---------------------------------------------------------------------------------
+    // Tela Inicial do Sistema
+
+    IApresentacaoAutenticacao  *cntrApresentacaoAutenticacao = new CntrApresentacaoAutenticacao();
+    IServicoAutenticacao *stubServicoAutenticacao = new StubServicoAutenticacao();
+
+    cntrApresentacaoAutenticacao->setCntrServicoAutenticacao(stubServicoAutenticacao);
+
+    bool resultado;
+
+    Codigo codigo;
+
+    while(true){
+
+        cout << endl << "Tela inicial de sistema." << endl;
+
+        try{
+
+            // Soliciatar serviço de autenticação.
+
+            resultado = cntrApresentacaoAutenticacao->autenticar(&codigo);
+        }
+        catch(const runtime_error &exp){
+                 cout << "Erro de sistema." << endl;
+                 break;
+        }
+
+        if(resultado) {
+            cout << endl << "Sucesso autenticacao." << endl;
+            break;
+        }
+        else {
+            cout << endl << "Erro autenticacao." << endl;
+            break;
+        }
+    }
+
+    delete cntrApresentacaoAutenticacao;
+    delete stubServicoAutenticacao;
 
     return 0;
 }

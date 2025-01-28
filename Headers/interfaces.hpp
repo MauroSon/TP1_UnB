@@ -5,11 +5,22 @@
 #include "entidades.hpp"
 #include <stdexcept>
 
+using namespace std;
+
 // INL = InterfaceLogicaNegocio
 
-class ILNEntidadesServico;
+// -------------------------------------------------------------------------------------------
+// Declaração adiantada (forward declaration)
 
-class IEntidadesServico {
+class InterfaceLogicaNegocioEntidadesServico;
+class InterfaceEntidadesApresentacao;
+class ILNContaServico;
+class IServicoAutenticacao;
+
+// --------------------------------------------------------------------
+// Interface Entidades Servico
+
+class InterfaceEntidadesServico {
 public:
     virtual bool criar(Viagem) = 0;
     virtual bool excluir(Viagem) = 0;
@@ -31,11 +42,11 @@ public:
     virtual bool ler(Hospedagem*) = 0;
     virtual bool atualizar(Hospedagem) = 0;
 
-    virtual void setCntrLNEntidadesServico(ILNEntidadesServico*) = 0;
-    virtual ~IEntidadesServico(){};
+    virtual void setCntrLogicaNegocioEntidadesServico(InterfaceLogicaNegocioEntidadesServico*) = 0;
+    virtual ~InterfaceEntidadesServico(){};
 };
 
-class ILNEntidadesServico {
+class InterfaceLogicaNegocioEntidadesServico {
 public:
     virtual bool criar(const Viagem&) = 0;
     virtual bool excluir(const Viagem&) = 0;
@@ -57,11 +68,43 @@ public:
     virtual bool ler(const Hospedagem&) = 0;
     virtual bool atualizar(const Hospedagem&) = 0;
 
-    virtual ~ILNEntidadesServico(){};
+    virtual ~InterfaceLogicaNegocioEntidadesServico(){};
 };
 
+// --------------------------------------------------------------------
+// CLASSE IEA
+/**
+ * @brief Classe que representa a interface de entidades na camada de apresentação.
+ *
+ * A classe gerencia as execuções referentes as entidades.
+ *
+ *
+ * Desenvolvido por: Mauro Ribeiro da Silva - 231013592
+ */
 
-class ILNContaServico; 
+class InterfaceEntidadesApresentacao{
+public:
+    virtual void executar(Codigo) = 0;
+    virtual ~InterfaceEntidadesApresentacao(){};
+};
+
+// --------------------------------------------------------------------
+// INTERFACE SERVIÇO AUTENTICAÇÃO
+
+/**
+ * @brief Classe abstrata Interface Serviço Autenticação
+ *
+ * Desenvolvido por: Isabela Soares Furlan - 231013636
+*/
+class IServicoAutenticacao {
+    public:
+        virtual bool autenticar(const Codigo&, const Senha&) = 0; ///< Autentica a conta verificando código e senha.
+        virtual ~IServicoAutenticacao() {} ///< Método destrutor da classe.
+};
+
+// --------------------------------------------------------------------
+// INTERFACE CONTA SERVIÇO
+
 
 class IContaServico{
 public:
@@ -81,17 +124,22 @@ public:
     virtual bool ler(const Conta&) = 0;
     virtual bool atualizar(const Conta&) = 0;
 
-    virtual ~INEContaServico(){};
+    virtual ~INLContaServico(){};
 };
 
-class IContaApresentacao{
-    virtual void criar(codigo) = 0;
-    virtual void executar(codigo) =0;
+// --------------------------------------------------------------------
+// INTERFACE APRESENTACAO AUTENTICACAO 
+/**
+*@brief Interface para a apresentação da autenticação.
+*Camada responsável por lidar com a interação do usuário no processo de autenticação e delegar a validação das credenciais para o serviço correspondente.
+*Desenvolvido por: Mariana Soares Oliveira (231013663)
+*/
 
-    virtual void criar(senha) = 0;
-    virtual void executar(senha) =0;
+class IApresentacaoAutenticacao {
+    public:
+        virtual bool autenticar(Codigo*) = 0;
+        virtual void setCntrServicoAutenticacao(IServicoAutenticacao*) = 0;
+        virtual ~IApresentacaoAutenticacao(){}
 };
-
-    
 
 #endif // INTERFACES_HPP_INCLUDED
