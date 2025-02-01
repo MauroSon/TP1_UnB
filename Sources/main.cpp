@@ -4,31 +4,27 @@
 #include "entidades.hpp"
 #include "interfaces.hpp"
 #include "controladoras.hpp"
-#include "stubs.hpp"
+#include "containers.hpp"
 
 using namespace std;
 
 int main() {
+    // Instanciar controladoras e containers
+    IApresentacaoAutenticacao* cntrApresentacaoAutenticacao = new CntrApresentacaoAutenticacao();
+    ContainerAutenticacao* containerAutenticacao = new ContainerAutenticacao();
 
-    // ---------------------------------------------------------------------------------
-    // Instanciar classes controladoras e stubs.
+    IApresentacaoConta* cntrApresentacaoConta = new CntrApresentacaoConta();
+    IServicoConta* containerConta = new ContainerConta(containerAutenticacao);
 
-    IApresentacaoAutenticacao *cntrApresentacaoAutenticacao = new CntrApresentacaoAutenticacao();
-    IServicoAutenticacao *stubServicoAutenticacao = new StubServicoAutenticacao();
+    IApresentacaoEntidades* cntrApresentacaoEntidades = new CntrApresentacaoEntidades();
+    IServicoEntidades* containerEntidades = new ContainerEntidades();
 
-    IApresentacaoConta *cntrApresentacaoConta = new CntrApresentacaoConta();
-    IServicoConta *stubServicoConta = new StubServicoConta();
+    // Ligar controladoras aos containers
+    cntrApresentacaoAutenticacao->setCntrServicoAutenticacao(containerAutenticacao);
+    cntrApresentacaoConta->setCntrServicoConta(containerConta);
+    cntrApresentacaoEntidades->setCntrServicoEntidades(containerEntidades);
 
-    // Ligar instâncias de controladoras aos stubs correspondentes.
-
-    cntrApresentacaoAutenticacao->setCntrServicoAutenticacao(stubServicoAutenticacao);
-    cntrApresentacaoConta->setCntrServicoConta(stubServicoConta);
-
-    bool resultado;
     Codigo codigo;
-
-    // ---------------------------------------------------------------------------------
-    // Simular apresentação de tela inicial do sistema.
 
     cout << endl << "Bem-vindo ao sistema!" << endl;
 
@@ -37,7 +33,8 @@ int main() {
         cout << "1. Autenticar" << endl;
         cout << "2. Criar conta" << endl;
         cout << "3. Executar conta" << endl;
-        cout << "4. Sair" << endl;
+        cout << "4. Gerenciar entidades" << endl;
+        cout << "5. Sair" << endl;
         cout << "Opcao: ";
 
         int opcao;
@@ -46,19 +43,12 @@ int main() {
         try {
             switch (opcao) {
                 case 1: { // Autenticar
-                    resultado = cntrApresentacaoAutenticacao->autenticar(&codigo);
-
-                    if (resultado) {
-                        cout << endl << "Autenticacao bem-sucedida!" << endl;
-                    } else {
-                        cout << endl << "Falha na autenticacao." << endl;
-                    }
+                    cntrApresentacaoAutenticacao->autenticar(&codigo);
                     break;
                 }
 
                 case 2: { // Criar conta
                     cntrApresentacaoConta->criar();
-                    cout << endl << "Conta criada com sucesso!" << endl;
                     break;
                 }
 
@@ -72,7 +62,8 @@ int main() {
                         cout << endl << "Escolha uma operacao:" << endl;
                         cout << "1. Alterar senha" << endl;
                         cout << "2. Excluir conta" << endl;
-                        cout << "3. Voltar" << endl;
+                        cout << "3. Ler conta" << endl;
+                        cout << "4. Voltar" << endl;
                         cout << "Opcao: ";
 
                         int opcaoOperacao;
@@ -85,40 +76,52 @@ int main() {
                                     cout << "Digite a nova senha: ";
                                     cin >> novaSenha;
 
-                                    // Cria um objeto Senha e define a nova senha
                                     Senha senhaAtualizada;
                                     try {
-                                        senhaAtualizada.setSenha(novaSenha); // Valida e define a senha
+                                        senhaAtualizada.setSenha(novaSenha);
                                     } catch (const invalid_argument &exp) {
                                         cout << "Erro: Senha invalida. " << exp.what() << endl;
                                         break;
                                     }
 
-                                    // Cria um objeto Conta com o código e a nova senha
                                     Conta contaAtualizada;
                                     contaAtualizada.setCodigo(codigo);
-                                    contaAtualizada.setSenha(senhaAtualizada); // Passa o objeto Senha, não a string
+                                    contaAtualizada.setSenha(senhaAtualizada);
 
-                                    // Atualiza a conta
-                                    if (stubServicoConta->atualizar(contaAtualizada)) {
+                                    // Atualizar a conta no ContainerConta
+                                    if (containerConta->atualizar(contaAtualizada)) {
                                         cout << "Senha alterada com sucesso!" << endl;
                                     } else {
-                                        cout << "Falha ao alterar a senha." << endl;
+                                        cout << "Falha ao alterar a senha. Conta nao encontrada." << endl;
                                     }
                                     break;
                                 }
 
                                 case 2: { // Excluir conta
-                                    if (stubServicoConta->excluir(codigo)) {
+                                    if (containerConta->excluir(codigo)) {
                                         cout << "Conta excluida com sucesso!" << endl;
-                                        return 0; // Sai do programa após excluir a conta
+                                        break;
                                     } else {
-                                        cout << "Falha ao excluir a conta." << endl;
+                                        cout << "Falha ao excluir a conta. Conta nao encontrada." << endl;
                                     }
                                     break;
                                 }
 
-                                case 3: { // Voltar
+                                case 3: { // Ler conta
+                                    Conta conta;
+                                    conta.setCodigo(codigo);
+
+                                    if (containerConta->ler(&conta)) { // Passar o objeto Conta
+                                        cout << "Conta encontrada:" << endl;
+                                        cout << "Codigo: " << conta.getCodigo().getCodigo() << endl;
+                                        cout << "Senha: " << conta.getSenha().getSenha() << endl;
+                                    } else {
+                                        cout << "Conta nao encontrada." << endl;
+                                    }
+                                    break;
+                                }
+
+                                case 4: { // Voltar
                                     break;
                                 }
 
@@ -133,19 +136,26 @@ int main() {
                             cout << "Erro de sistema: " << exp.what() << endl;
                         }
 
-                        if (opcaoOperacao == 3) {
-                            break; // Volta ao menu principal
+                        if (opcaoOperacao == 4) {
+                            break;
                         }
                     }
                     break;
                 }
 
-                case 4: { // Sair
+                case 4: { // Gerenciar entidades
+                    cntrApresentacaoEntidades->executar(codigo);
+                    break;
+                }
+
+                case 5: { // Sair
                     cout << endl << "Saindo do sistema..." << endl;
                     delete cntrApresentacaoAutenticacao;
-                    delete stubServicoAutenticacao;
+                    delete containerAutenticacao;
                     delete cntrApresentacaoConta;
-                    delete stubServicoConta;
+                    delete containerConta;
+                    delete cntrApresentacaoEntidades;
+                    delete containerEntidades;
                     return 0;
                 }
 

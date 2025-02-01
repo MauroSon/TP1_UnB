@@ -667,3 +667,6 @@ void CntrApresentacaoEntidades::executar(Codigo codigo) {
         }
     }
 }
+void CntrApresentacaoEntidades::setCntrServicoEntidades(IServicoEntidades* cntrServicoEntidades) {
+    this->cntrServicoEntidades = cntrServicoEntidades;
+}

@@ -35,7 +35,6 @@ private:
     IServicoEntidades* cntrServicoEntidades;
 public:
     void executar(Codigo);
-    void setCntrServicoEntidades(IServicoEntidades*);
+    void setCntrServicoEntidades(IServicoEntidades* cntrServicoEntidades);
 };
-
 #endif // CONTROLADORAS_HPP_INCLUDED
