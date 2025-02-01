@@ -10,33 +10,32 @@
 
 using namespace std;
 
-// ---------------------------------------------------------------------------------
-// Declaração de classe controladora e implementação de método.
-
-class CntrApresentacaoAutenticacao:public IApresentacaoAutenticacao {
+// Controladora de Apresentação de Autenticação
+class CntrApresentacaoAutenticacao : public IApresentacaoAutenticacao {
 private:
-    IServicoAutenticacao *cntrServicoAutenticacao;        // Referência para servidor.
+    IServicoAutenticacao* cntrServicoAutenticacao;
 public:
     bool autenticar(Codigo*);
     void setCntrServicoAutenticacao(IServicoAutenticacao*);
 };
 
-void inline CntrApresentacaoAutenticacao::setCntrServicoAutenticacao(IServicoAutenticacao *cntrServicoAutenticacao){
-        this->cntrServicoAutenticacao = cntrServicoAutenticacao;
-}
-
-class CntrApresentacaoConta:public IApresentacaoConta {
+// Controladora de Apresentação de Conta
+class CntrApresentacaoConta : public IApresentacaoConta {
 private:
-    IServicoConta *cntrServicoConta;
+    IServicoConta* cntrServicoConta;
 public:
     void criar();
     void executar(Codigo);
     void setCntrServicoConta(IServicoConta*);
 };
 
-void inline CntrApresentacaoConta::setCntrServicoConta(IServicoConta *cntrServicoConta){
-    this->cntrServicoConta = cntrServicoConta;
-}
+// Controladora de Apresentação de Entidades
+class CntrApresentacaoEntidades : public IApresentacaoEntidades {
+private:
+    IServicoEntidades* cntrServicoEntidades;
+public:
+    void executar(Codigo);
+    void setCntrServicoEntidades(IServicoEntidades*);
+};
 
 #endif // CONTROLADORAS_HPP_INCLUDED
-
